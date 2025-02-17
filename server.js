@@ -79,6 +79,19 @@ app.post("/reset-lamp", async (req, res) => {
     }
 });
 
+app.get("/lamp-status", async (req, res) => {
+    try {
+        const ip = req.clientIp;
+        const lamp = await LampState.findOne();
+        
+        res.json({
+            flamesLit: lamp.flamesLit,
+            userClicked: lamp.usersClicked.includes(ip),
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Error fetching lamp status", error });
+    }
+});
 
 
 
