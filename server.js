@@ -16,6 +16,7 @@ const io = new Server(server, {
     }
 });
 
+app.set("trust proxy", true); // Trust proxy for IP extraction
 app.use(cors());
 app.use(express.json());
 app.use(requestIp.mw());
@@ -46,7 +47,10 @@ async function initializeLamp() {
 io.on("connection", async (socket) => {
     console.log(`✅ User Connected: ${socket.id}`);
     const lamp = await initializeLamp();
-    const ip = socket.handshake.address;
+    
+    // Extract IP address correctly when behind a proxy
+    const ip = socket.handshake.headers['x-forwarded-for'] || socket.handshake.address;
+    console.log(`Client IP: ${ip}`);
 
     // Send current lamp state to new user
     socket.emit("update-lamp", lamp.flamesLit);
