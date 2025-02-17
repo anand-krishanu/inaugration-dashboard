@@ -72,12 +72,13 @@ io.on("connection", async (socket) => {
 app.post("/reset-lamp", async (req, res) => {
     try {
         await LampState.updateOne({}, { flamesLit: 0, usersClicked: [] });
-        io.emit("update-lamp", 0);
+        io.emit("reset-lamp");
         res.json({ success: true, message: "Lamp has been reset!" });
     } catch (error) {
         res.status(500).json({ success: false, message: "Error resetting lamp", error });
     }
 });
+
 
 
 

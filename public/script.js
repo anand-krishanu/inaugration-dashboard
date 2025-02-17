@@ -33,6 +33,13 @@ socket.on('lamp-lit', () => {
     startFlowerShower();
 });
 
+socket.on("reset-lamp", () => {
+    localStorage.removeItem("hasClicked");
+    document.getElementById("lamp").src = "/assets/lamp-0.png";
+    document.getElementById("light-btn").disabled = false;
+    location.reload();
+});
+
 function playMusic() {
     let audio = new Audio('lamp-lit.mp3');
     audio.play();
@@ -55,14 +62,7 @@ document.getElementById("reset-btn").addEventListener("click", () => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert("Lamp has been reset!");
-                document.getElementById("lamp").src = "/assets/lamp-0.png";
-                localStorage.removeItem("hasClicked");
-                document.getElementById("light-btn").disabled = false;
-
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
+                console.log("Lamp has been reset!");
             }
         });
 });
