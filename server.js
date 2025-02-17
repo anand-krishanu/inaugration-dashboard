@@ -19,20 +19,21 @@ const io = new Server(server, {
 app.use(cors());
 app.use(express.json());
 app.use(requestIp.mw());
-
 app.use(express.static(path.join(__dirname, "public")));
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("✅ MongoDB Connected"))
     .catch(err => console.log("❌ DB Connection Error:", err));
 
+// Define lamp state schema
 const LampSchema = new mongoose.Schema({
     flamesLit: { type: Number, default: 0 },
-    usersClicked: { type: [String], default: [] }
+    usersClicked: { type: [String], default: [] } // Store unique IPs
 });
 
 const LampState = mongoose.model("LampState", LampSchema);
 
+// Initialize lamp state in DB
 async function initializeLamp() {
     let lamp = await LampState.findOne();
     if (!lamp) {
@@ -47,8 +48,10 @@ io.on("connection", async (socket) => {
     const lamp = await initializeLamp();
     const ip = socket.handshake.address;
 
+    // Send current lamp state to new user
     socket.emit("update-lamp", lamp.flamesLit);
 
+    // Handle lamp lighting
     socket.on("light-lamp", async () => {
         let lamp = await LampState.findOne();
 
@@ -61,14 +64,18 @@ io.on("connection", async (socket) => {
             if (lamp.flamesLit === 5) {
                 io.emit("lamp-lit");
             }
+        } else {
+            socket.emit("click-denied", "You have already clicked!");
         }
     });
 
+    // Handle user disconnect
     socket.on("disconnect", () => {
         console.log(`❌ User Disconnected: ${socket.id}`);
     });
 });
 
+// Reset lamp state
 app.post("/reset-lamp", async (req, res) => {
     try {
         await LampState.updateOne({}, { flamesLit: 0, usersClicked: [] });
@@ -79,6 +86,7 @@ app.post("/reset-lamp", async (req, res) => {
     }
 });
 
+// Fetch current lamp state
 app.get("/lamp-status", async (req, res) => {
     try {
         const ip = req.clientIp;
@@ -93,7 +101,6 @@ app.get("/lamp-status", async (req, res) => {
     }
 });
 
-
-
+// Start server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
