@@ -30,3 +30,4 @@ Thumbs.db
 dist/
 build/
 coverage/
+public/assets/cursor.png

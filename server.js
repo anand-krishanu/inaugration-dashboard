@@ -105,6 +105,12 @@ app.get("/lamp-status", async (req, res) => {
     }
 });
 
+//Reset Page
+app.get("/resetCanOnlyBeDoneByMe", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "reset.html"));
+});
+
+
 // Start server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));

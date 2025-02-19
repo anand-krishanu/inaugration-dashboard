@@ -62,16 +62,5 @@ function startFlowerShower() {
 
     setTimeout(() => {
         flowerGif.style.display = "none";
-    }, 10000);
+    }, 100000);
 }
-
-// Reset lamp via button
-document.getElementById("reset-btn").addEventListener("click", () => {
-    fetch("/reset-lamp", { method: "POST" })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                console.log("Lamp has been reset!");
-            }
-        });
-});
