@@ -51,7 +51,8 @@ socket.on("reset-lamp", () => {
 
 // Play music on lamp lighting
 function playMusic() {
-    let audio = new Audio("/assets/audio-inaug.mp3");
+    // let audio = new Audio("/assets/audio-inaug.mp3");
+    let audio = new Audio("/assets/audio-2.mp3");
     audio.volume = 0.3;
     audio.play().catch(error => {
         console.log("🔇 Audio autoplay blocked! User interaction required.");
