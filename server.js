@@ -73,7 +73,6 @@ io.on("connection", async (socket) => {
         }
     });
 
-    // Handle user disconnect
     socket.on("disconnect", () => {
         console.log(`❌ User Disconnected: ${socket.id}`);
     });
