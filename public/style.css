@@ -129,7 +129,7 @@ button:hover {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: url("/assets/flowers.gif") center/cover no-repeat;
+    background: url("/assets/flowers-red-1.gif") center/cover no-repeat;
     pointer-events: none;
     z-index: 9999;
     display: none;
@@ -152,12 +152,12 @@ button:hover {
 .social-icon {
     margin: 0 5px;
     font-size: 18px;
-    color: #ff6b3f;
+    color: #000;
     transition: color 0.3s ease;
 }
 
 .social-icon:hover {
-    color: #ff914d;
+    color: #6b6a6a;
 }
 
 .reset {

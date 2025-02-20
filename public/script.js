@@ -51,9 +51,13 @@ socket.on("reset-lamp", () => {
 
 // Play music on lamp lighting
 function playMusic() {
-    let audio = new Audio("lamp-lit.mp3");
-    audio.play();
+    let audio = new Audio("/assets/audio-inaug.mp3");
+    audio.volume = 0.3;
+    audio.play().catch(error => {
+        console.log("🔇 Audio autoplay blocked! User interaction required.");
+    });
 }
+
 
 // Start flower shower animation
 function startFlowerShower() {
