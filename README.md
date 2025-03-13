@@ -28,4 +28,4 @@ This project is a **Digital Inauguration Dashboard** developed for the **ATAL On
 
 
 ---
-💡 **Developed by:** [Krishanu ANand](https://github.com/anand-krishanu)
+💡 **Developed by:** [Krishanu Anand](https://github.com/anand-krishanu)
